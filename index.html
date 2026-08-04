@@ -1,0 +1,155 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;700&family=Lora:ital,wght@0,400;0,500;1,400&family=IBM+Plex+Mono:wght@400;500&display=swap">
+  <script src="./image-slot.js"></script>
+  <style>
+    body { margin: 0; background: oklch(93% 0.006 85); }
+    * { box-sizing: border-box; }
+    a { color: oklch(45% 0.14 45); text-decoration: none; }
+    a:hover { color: oklch(38% 0.14 45); }
+  </style>
+</helmet>
+
+<div style="width:100%;max-width:1440px;margin:0 auto;background:oklch(98% 0.006 85);font-family:'Space Grotesk',sans-serif;color:oklch(20% 0.01 85);position:relative;overflow:hidden;">
+
+  <nav style="display:flex;justify-content:space-between;align-items:center;padding:26px 48px;position:sticky;top:0;background:oklch(98% 0.006 85 / 0.92);backdrop-filter:blur(6px);z-index:20;">
+    <div style="display:flex;align-items:center;gap:12px;">
+      <img src="assets/logo.png" alt="Moo. logo" style="height:26px;width:auto;">
+      <span style="font-weight:700;font-size:16px;letter-spacing:-0.01em;">Mariel Marshall</span>
+    </div>
+    <div style="display:flex;gap:32px;font-size:13px;text-transform:uppercase;letter-spacing:0.06em;font-weight:500;">
+      <a href="#work">Work</a><a href="#about">About</a><a href="#contact">Contact</a>
+    </div>
+  </nav>
+
+<section id="work" style="position:relative;width:100%;padding:56px 48px 96px;">
+    <div style="display:grid;grid-template-columns:repeat(4,1fr);gap:56px 32px;">
+      <sc-for list="{{sortedProjects}}" as="item" hint-placeholder-count="8">
+        <div style="cursor:pointer;text-align:center;" onClick="{{item.open}}">
+          <image-slot id="w-{{item.id}}" src="{{item.img}}" style="width:100%;aspect-ratio:130/160;filter:saturate(0.92) contrast(1.01);" shape="rounded" radius="4" placeholder="{{item.label}}"></image-slot>
+          <div style="font-family:'IBM Plex Mono',monospace;font-size:11px;margin-top:8px;">{{ item.year }} · {{ item.label }}</div>
+        </div>
+      </sc-for>
+    </div>
+
+    <sc-if value="{{hasSelected}}" hint-placeholder-val="{{false}}">
+      <div style="position:fixed;inset:0;background:oklch(20% 0.01 85 / 0.55);z-index:10;display:flex;align-items:center;justify-content:center;">
+        <div style="background:oklch(98% 0.006 85);width:min(640px,90%);max-height:80%;overflow:auto;padding:44px;position:relative;box-shadow:0 30px 80px -20px oklch(0% 0 0 / 0.4);">
+          <div onClick="{{closeProject}}" style="position:absolute;top:18px;right:22px;cursor:pointer;font-family:'IBM Plex Mono',monospace;font-size:13px;">Close ✕</div>
+          <sc-if value="{{hasVideo}}" hint-placeholder-val="{{false}}">
+            <video src="{{selected.video}}" controls style="width:100%;border-radius:4px;margin-bottom:16px;display:block;"></video>
+          </sc-if>
+          <sc-if value="{{hasImages}}" hint-placeholder-val="{{true}}">
+            <div style="display:flex;gap:12px;margin-bottom:16px;overflow-x:auto;padding-bottom:4px;">
+              <sc-for list="{{modalImages}}" as="img" hint-placeholder-count="2">
+                <image-slot id="modal-{{img.key}}" src="{{img.src}}" style="width:140px;height:170px;flex-shrink:0;" shape="rounded" radius="4" placeholder="image"></image-slot>
+              </sc-for>
+            </div>
+          </sc-if>
+          <div style="font-family:'IBM Plex Mono',monospace;font-size:12px;text-transform:uppercase;letter-spacing:0.06em;color:oklch(52% 0.14 45);">{{ selected.year }} · {{ selected.type }}</div>
+          <div style="font-family:'Lora',serif;font-size:30px;font-weight:500;margin-top:8px;">{{ selected.title }}</div>
+          <div style="font-size:13px;color:oklch(40% 0.01 85);margin-top:4px;">{{ selected.role }}</div>
+          <div style="font-family:'Lora',serif;font-size:16px;line-height:1.65;margin-top:18px;color:oklch(25% 0.01 85);white-space:pre-wrap;">{{ selected.desc }}</div>
+          <sc-if value="{{hasLink}}" hint-placeholder-val="{{false}}">
+            <div style="margin-top:18px;"><a href="{{selected.link}}" target="_blank" style="font-family:'IBM Plex Mono',monospace;font-size:12px;">View more →</a></div>
+          </sc-if>
+        </div>
+      </div>
+    </sc-if>
+  </section>
+
+  <section id="about" style="display:flex;flex-wrap:wrap;gap:56px;padding:80px 48px;align-items:center;justify-content:center;border-top:1px solid oklch(88% 0.01 85);">
+    <div style="flex:1;max-width:560px;min-width:320px;">
+      <div style="font-family:'IBM Plex Mono',monospace;font-size:12px;text-transform:uppercase;letter-spacing:0.08em;color:oklch(52% 0.14 45);margin-bottom:16px;">About</div>
+      <div style="font-family:'Lora',serif;font-size:22px;line-height:1.6;color:oklch(24% 0.01 85);">I build performance and technology that ask what happens to connection when it's mediated by machines. I co-led bluemouth inc. from 2020–2025 and my current research, supported by a Chalmers Arts Fellowship, is an independent practice exploring artificial intimacy through performance, installation, and interactive media. I'm open to new collaborations, commissions, and conversations.</div>
+    </div>
+    <div style="flex-shrink:0;">
+      <image-slot id="about-headshot" src="assets/headshot.jpg" style="width:320px;height:400px;filter:saturate(0.92) contrast(1.01);" shape="rounded" radius="4" fit="cover" placeholder="Headshot"></image-slot>
+    </div>
+  </section>
+
+  <section id="contact" style="padding:80px 48px 100px;border-top:1px solid oklch(88% 0.01 85);">
+    <div style="font-family:'IBM Plex Mono',monospace;font-size:12px;text-transform:uppercase;letter-spacing:0.08em;color:oklch(52% 0.14 45);margin-bottom:16px;">Contact</div>
+    <a href="mailto:mariel.l.marshall@gmail.com" style="font-family:'Lora',serif;font-style:italic;font-size:40px;font-weight:500;">mariel.l.marshall@gmail.com</a>
+  </section>
+
+</div>
+
+</x-dc>
+<script type="text/x-dc" data-dc-script>
+class Component extends DCLogic {
+  state = { selected: null };
+
+  cardOrder = ['artificialwomen','onlymodel','gameoflife','cherry','tablecloth','chatbots','cafesarajevo','tandem'];
+  cardLabel = { artificialwomen: 'Artificial Women', onlymodel: 'Only Model We Have', gameoflife: 'Game of Life', cherry: "Cherry's Night Off", tablecloth: 'Tangible Interfaces', chatbots: 'Hyperstage Talk', cafesarajevo: 'Café Sarajevo', tandem: 'Tandem Experiences' };
+  cardImg = { artificialwomen: 'assets/artificial-women-thumb.png', onlymodel: 'assets/only-model-attractor-v2.png', gameoflife: 'assets/gameoflife-boxing-match.jpg', cherry: 'assets/cybrothel-heads.jpg', cafesarajevo: 'assets/cafe-sarajevo-vr-performance.jpg', tandem: 'assets/tandem-picnic.jpg', tablecloth: 'assets/tablecloth-sewing-1.jpg' };
+  cardRotate = { artificialwomen: -2, onlymodel: 3, gameoflife: -3, cherry: 2, tablecloth: -2, chatbots: 3, cafesarajevo: -3, tandem: 2 };
+  cardOffset = { artificialwomen: 0, onlymodel: 32, gameoflife: 16, cherry: 0, tablecloth: 24, chatbots: 8, cafesarajevo: 0, tandem: 16 };
+
+  projectsData = [
+    { id: 'cherry', year: '2026–27', title: "Cherry's Night Off", type: 'Performance Installation', role: 'Co-creator & performer',
+      desc: "A performance installation exploring artificial intimacy, developed through field research in Berlin with multidisciplinary artist Fee-Gloria Grönemeyer (Wiesbaden). Examines the technologies and spaces through which people seek connection, intimacy, and companionship in an increasingly automated social landscape.\n\nCurrently in development. Premiere 2026-2027.",
+      images: ['assets/cybrothel-heads.jpg', 'assets/cybrothel-toilet.jpg'] },
+    { id: 'chatbots', year: '2025', title: 'Chatbots, Cybrothels and the Crisis of Connection', type: 'Talk', role: 'Speaker',
+      desc: 'In an age where chatbots are the new "dear diary" confidants, and anyone can build their own AI girlfriend with the click of a button, we must ask: Are we creating connection, or simulating it? This talk explores the loneliness epidemic through the lens of emerging trends in human-machine companionship. Drawing on research from Sherry Turkle, Julie Wosk, Robert Putnam, and grounded in immersive performance and lived experience, this talk explores what machines can, (and can\'t) offer in place of community and asks how artists might create new forms of gathering and connection.\n\nFrom sex-doll brothels to ChatGPT, from running clubs to faith-based organizations, this talk maps the emotional topography of contemporary yearning for belonging. Asking what new cultural architectures might artists create to foster genuine connection? Navigating the promises and perils of human-machine intimacy while considering how the performance landscape can become a laboratory for reimagining belonging in an age of digital dislocation.\n\nPresented as part of \'Hyperstage\', a Global Congress on Digital Innovation in the Visual and Performing Arts, Rome, 2025.' },
+    { id: 'onlymodel', year: '2026', title: 'The Only Model We Have', type: 'Digital Media', role: 'Creator',
+      desc: 'A new media-arts installation: an imagined ultrasound portraying an AI and its superintelligent offspring as two nested de Jong attractors — mathematical forms in which one shape holds the other inside it. Exhibited at Neue Bäckerei, Wiesbaden, Germany, August 2026.',
+      link: 'https://mariel-marshall.github.io/the-only-model-we-have/',
+      images: ['assets/only-model-attractor-v2.png', 'assets/neue-backerei-poster.jpg'] },
+    { id: 'artificialwomen', year: '2026', title: 'Artificial Women', type: 'Digital Media', role: 'Creator',
+      desc: 'Digital media work using StreamDiffusion and TouchDesigner, with live video input from users. Exhibited InterAccess, Doors Open Toronto 2026.',
+      video: 'assets/artificial-women.mp4' },
+    { id: 'gameoflife', year: '2025', title: 'Game of Life', type: 'Performance', role: 'Co-creator & performer',
+      desc: 'Game of Life (including Elephant & LucyAI), bluemouth inc., 2025; touring North America, Fall 2026. Winner, Dora Award for Innovative Experience (2025).',
+      images: ['assets/gameoflife-boxing-match.jpg', 'assets/gameoflife-dora-award.png', 'assets/gameoflife-poster-1.jpg', 'assets/gameoflife-polaroids.jpg'] },
+    { id: 'tablecloth', year: '2025', title: 'Game of Life — Interactive Tablecloth', type: 'Tangible Interface', role: 'Creator',
+      desc: "Lead designer and creator of the central tablecloth for Elephant (by bluemouth inc. 2025), a 30-foot conductive-thread and MIDI interface that transforms audience touch into sound, turning participants into a living instrument.",
+      images: ['assets/tablecloth-sewing-1.jpg', 'assets/tablecloth-sewing-2.jpg', 'assets/tablecloth-building.jpg', 'assets/tablecloth-creation.jpg', 'assets/tablecloth-wiring-1.jpg', 'assets/tablecloth-wiring-2.jpg'] },
+    { id: 'cafesarajevo', year: '2020', title: 'Café Sarajevo', type: 'Headset', role: 'Co-creator & performer',
+      desc: "Café Sarajevo, bluemouth inc., 2020. An immersive performance incorporating live radio podcasting and 360° video. Lab presentation at SummerWorks (2018), world premiere in Singapore (2020), before its North American debut at the Progress Festival Toronto (2020). Worked closely with developer Jacob Niedzwiecki and the technical team on a custom phone application combined with an RF headset system for synchronized audio and 360° video to audiences.",
+      images: ['assets/cafe-sarajevo-vr-performance.jpg', 'assets/cafe-sarajevo-headsets.jpg', 'assets/cafe-sarajevo-singapore-screen.jpg'] },
+    { id: 'tandem', year: '2019–2024', title: 'Tandem Experiences', type: 'Startup', role: 'Founder',
+      desc: 'Founded and led product for Tandem Experiences (2019–2024): designed and built the recommendation engine and app powering a things-to-do platform, and led all technical product decisions from data architecture to UX. The platform grew into a social club connecting people through shared real-world arts and culture experiences.',
+      images: ['assets/tandem-picnic.jpg', 'assets/tandem-app-screenshot.png'] }
+  ];
+
+  openProject = (p) => { this.setState({ selected: p }); };
+  closeProject = () => { this.setState({ selected: null }); };
+
+  renderVals() {
+    const byId = {};
+    this.projectsData.forEach(p => { byId[p.id] = p; });
+    const sortedProjects = this.cardOrder.map(id => {
+      const p = byId[id];
+      return { ...p, open: () => this.openProject(p), rotate: this.cardRotate[id], offset: this.cardOffset[id], label: this.cardLabel[id], img: this.cardImg[id] || '' };
+    });
+    const sel = this.state.selected;
+    const modalImages = sel
+      ? (sel.images && sel.images.length
+          ? sel.images.map((src, i) => ({ key: sel.id + '-' + i, src }))
+          : [{ key: sel.id + '-1' }, { key: sel.id + '-2' }])
+      : [];
+    return {
+      sortedProjects,
+      selected: sel,
+      hasSelected: !!sel,
+      hasLink: !!(sel && sel.link),
+      hasVideo: !!(sel && sel.video),
+      hasImages: !(sel && sel.video),
+      modalImages,
+      closeProject: this.closeProject
+    };
+  }
+}
+</script>
+</body>
+</html>
