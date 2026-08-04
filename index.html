@@ -79,7 +79,7 @@
 
   <section id="contact" style="padding:80px 48px 100px;border-top:1px solid oklch(88% 0.01 85);">
     <div style="font-family:'IBM Plex Mono',monospace;font-size:12px;text-transform:uppercase;letter-spacing:0.08em;color:oklch(52% 0.14 45);margin-bottom:16px;">Contact</div>
-    <a href="mailto:mariel.l.marshall@gmail.com" style="font-family:'Lora',serif;font-style:italic;font-size:40px;font-weight:500;">mariel.l.marshall@gmail.com</a>
+    <a id="contact-email" href="#" style="font-family:'Lora',serif;font-style:italic;font-size:40px;font-weight:500;">mariel [at] gmail [dot] com</a>
   </section>
 
 </div>
@@ -150,6 +150,18 @@ class Component extends DCLogic {
     };
   }
 }
+</script>
+<script>
+  (function () {
+    var user = ['m', 'a', 'r', 'i', 'e', 'l', '.', 'l', '.', 'm', 'a', 'r', 's', 'h', 'a', 'l', 'l'].join('');
+    var domain = ['g', 'm', 'a', 'i', 'l', '.', 'c', 'o', 'm'].join('');
+    var address = user + '@' + domain;
+    var link = document.getElementById('contact-email');
+    if (link) {
+      link.href = 'mailto:' + address;
+      link.textContent = address;
+    }
+  })();
 </script>
 </body>
 </html>
