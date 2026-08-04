@@ -79,7 +79,7 @@
 
   <section id="contact" style="padding:80px 48px 100px;border-top:1px solid oklch(88% 0.01 85);">
     <div style="font-family:'IBM Plex Mono',monospace;font-size:12px;text-transform:uppercase;letter-spacing:0.08em;color:oklch(52% 0.14 45);margin-bottom:16px;">Contact</div>
-    <a id="contact-email" href="#" style="font-family:'Lora',serif;font-style:italic;font-size:40px;font-weight:500;">mariel [at] gmail [dot] com</a>
+    <a href="{{ mailtoHref }}" style="font-family:'Lora',serif;font-style:italic;font-size:40px;font-weight:500;">{{ emailAddress }}</a>
   </section>
 
 </div>
@@ -94,6 +94,9 @@ class Component extends DCLogic {
   cardImg = { artificialwomen: 'assets/artificial-women-thumb.png', onlymodel: 'assets/only-model-attractor-v2.png', gameoflife: 'assets/gameoflife-boxing-match.jpg', cherry: 'assets/cybrothel-heads.jpg', cafesarajevo: 'assets/cafe-sarajevo-vr-performance.jpg', tandem: 'assets/tandem-picnic.jpg', tablecloth: 'assets/tablecloth-sewing-1.jpg' };
   cardRotate = { artificialwomen: -2, onlymodel: 3, gameoflife: -3, cherry: 2, tablecloth: -2, chatbots: 3, cafesarajevo: -3, tandem: 2 };
   cardOffset = { artificialwomen: 0, onlymodel: 32, gameoflife: 16, cherry: 0, tablecloth: 24, chatbots: 8, cafesarajevo: 0, tandem: 16 };
+
+  emailUser = 'mariel.l.marshall';
+  emailDomain = 'gmail.com';
 
   projectsData = [
     { id: 'cherry', year: '2026–27', title: "Cherry's Night Off", type: 'Performance Installation', role: 'Co-creator & performer',
@@ -138,6 +141,7 @@ class Component extends DCLogic {
           ? sel.images.map((src, i) => ({ key: sel.id + '-' + i, src }))
           : [{ key: sel.id + '-1' }, { key: sel.id + '-2' }])
       : [];
+    const emailAddress = this.emailUser + '@' + this.emailDomain;
     return {
       sortedProjects,
       selected: sel,
@@ -146,22 +150,12 @@ class Component extends DCLogic {
       hasVideo: !!(sel && sel.video),
       hasImages: !(sel && sel.video),
       modalImages,
-      closeProject: this.closeProject
+      closeProject: this.closeProject,
+      emailAddress,
+      mailtoHref: 'mailto:' + emailAddress
     };
   }
 }
-</script>
-<script>
-  (function () {
-    var user = ['m', 'a', 'r', 'i', 'e', 'l', '.', 'l', '.', 'm', 'a', 'r', 's', 'h', 'a', 'l', 'l'].join('');
-    var domain = ['g', 'm', 'a', 'i', 'l', '.', 'c', 'o', 'm'].join('');
-    var address = user + '@' + domain;
-    var link = document.getElementById('contact-email');
-    if (link) {
-      link.href = 'mailto:' + address;
-      link.textContent = address;
-    }
-  })();
 </script>
 </body>
 </html>
