@@ -71,9 +71,9 @@
     <sc-if value="{{hasSelected}}" hint-placeholder-val="{{false}}">
       <div style="position:fixed;inset:0;background:oklch(20% 0.01 85 / 0.55);z-index:10;display:flex;align-items:center;justify-content:center;">
         <div class="modal-card" style="background:oklch(98% 0.006 85);width:min(640px,92%);max-height:85%;overflow:auto;padding:44px;position:relative;box-shadow:0 30px 80px -20px oklch(0% 0 0 / 0.4);">
-          <div class="modal-close" onClick="{{closeProject}}" role="button" aria-label="Close" style="position:absolute;top:10px;right:12px;cursor:pointer;font-family:'IBM Plex Mono',monospace;font-size:13px;">Close ✕</div>
+          <div class="modal-close" onClick="{{closeProject}}" role="button" aria-label="Close" style="position:absolute;top:10px;right:12px;cursor:pointer;font-family:'IBM Plex Mono',monospace;font-size:13px;z-index:5;background:oklch(98% 0.006 85 / 0.95);border-radius:20px;padding:4px 10px;box-shadow:0 1px 6px oklch(0% 0 0 / 0.15);">Close ✕</div>
           <sc-if value="{{hasImages}}" hint-placeholder-val="{{true}}">
-            <div style="display:flex;gap:12px;margin-bottom:16px;overflow-x:auto;padding-bottom:4px;">
+            <div style="display:flex;gap:12px;margin-top:36px;margin-bottom:16px;overflow-x:auto;padding-bottom:4px;">
               <sc-for list="{{modalImages}}" as="img" hint-placeholder-count="2">
                 <image-slot id="modal-{{img.key}}" src="{{img.src}}" style="width:140px;height:170px;flex-shrink:0;" shape="rounded" radius="4" placeholder="image"></image-slot>
               </sc-for>
